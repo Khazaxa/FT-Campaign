@@ -403,3 +403,4 @@ FodyWeavers.xsd
 *.lst
 *.md
 *.mvn/wrapper
+*.class
