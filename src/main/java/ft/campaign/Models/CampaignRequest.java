@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignCreateRequest {
+public class CampaignRequest {
     private String name;
     private String keywords;
     private Double bidAmount;

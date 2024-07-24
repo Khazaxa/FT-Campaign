@@ -2,8 +2,8 @@ package ft.campaign.Mappers;
 
 import ft.campaign.Dto.CampaignDto;
 import ft.campaign.Entities.Campaign;
-import ft.campaign.Models.CampaignCreateRequest;
-import ft.campaign.Models.CampaignCreateResponse;
+import ft.campaign.Models.CampaignRequest;
+import ft.campaign.Models.CampaignResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -15,8 +15,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface ICampaignMapper {
     CampaignDto campaignToCampaignDto(Campaign campaign);
     Campaign campaignDtoToCampaign(CampaignDto campaignDto);
-    CampaignCreateResponse campaignToCampaignCreateResponse(Campaign campaign);
-    Campaign campaignCreateRequestToCampaign(CampaignCreateRequest campaignCreateRequest);
-//    void campaignUpdateRequestToCampaign(CampaignUpdateRequest campaignUpdateRequest, @MappingTarget Campaign existingCampaign);
-//    CampaignUpdateResponse campaignToCampaignUpdateResponse(Campaign campaign);
+    CampaignResponse campaignToCampaignCreateResponse(Campaign campaign);
+    Campaign campaignCreateRequestToCampaign(CampaignRequest campaignRequest);
+    void campaignUpdateRequestToCampaign(CampaignRequest campaignUpdateRequest, @MappingTarget Campaign existingCampaign);
+    CampaignResponse campaignToCampaignUpdateResponse(Campaign campaign);
 }

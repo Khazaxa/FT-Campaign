@@ -5,11 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignUpdateRequest {
+public class CampaignResponse {
+    private Long id;
     private String name;
     private String keywords;
     private Double bidAmount;
@@ -17,4 +20,6 @@ public class CampaignUpdateRequest {
     private Boolean status;
     private String city;
     private Double radius;
+    private Date createdAt;
+    private Date updatedAt;
 }

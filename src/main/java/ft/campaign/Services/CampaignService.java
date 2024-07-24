@@ -3,8 +3,8 @@ package ft.campaign.Services;
 import ft.campaign.Entities.Campaign;
 import ft.campaign.Exceptions.WrongDataException;
 import ft.campaign.Mappers.ICampaignMapper;
-import ft.campaign.Models.CampaignCreateRequest;
-import ft.campaign.Models.CampaignCreateResponse;
+import ft.campaign.Models.CampaignRequest;
+import ft.campaign.Models.CampaignResponse;
 import ft.campaign.Repositories.ICampaignRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -25,7 +26,7 @@ public class CampaignService {
         this.campaignMapper = campaignMapper;
     }
 
-    public CampaignCreateResponse create(CampaignCreateRequest request) throws WrongDataException {
+    public CampaignResponse create(CampaignRequest request) throws WrongDataException {
         log.info("Validating create campaign request");
         validate(request);
 
@@ -47,16 +48,33 @@ public class CampaignService {
             throw new WrongDataException(exception.getMessage());
         }
         log.info("Saved campaign: {}", savedCampaign);
-        CampaignCreateResponse createCampaignResponse = campaignMapper.campaignToCampaignCreateResponse(savedCampaign);
+        CampaignResponse createCampaignResponse = campaignMapper.campaignToCampaignCreateResponse(savedCampaign);
         log.info("Mapped campaign for response: {}", createCampaignResponse);
         return createCampaignResponse;
+    }
+
+    public CampaignResponse update(Long id, CampaignRequest request) throws WrongDataException {
+        log.info("Requesting to update campaign with id: {}", id);
+        Optional<Campaign> campaignOptional = campaignRepository.findCampaignById(id);
+        if (campaignOptional.isEmpty()) {
+            log.info("Campaign with id {} was not found", id);
+            throw new WrongDataException("Campaign was not found.");
+        }
+
+        validate(request);
+
+        Campaign existingCampaign = campaignOptional.get();
+        campaignMapper.campaignUpdateRequestToCampaign(request, existingCampaign);
+        Campaign updatedCampaign = campaignRepository.save(existingCampaign);
+        log.info("Successfully updated campaign with id: {}", id);
+        return campaignMapper.campaignToCampaignUpdateResponse(updatedCampaign);
     }
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
     }
 
-    private void validate(CampaignCreateRequest request) throws WrongDataException {
+    private void validate(CampaignRequest request) throws WrongDataException {
         if (request.getName() == null || request.getName().isEmpty()) {
             throw new WrongDataException("Campaign name is required.");
         }
