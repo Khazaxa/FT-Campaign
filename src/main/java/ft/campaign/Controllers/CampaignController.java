@@ -1,6 +1,9 @@
 package ft.campaign.Controllers;
 
 import ft.campaign.Entities.Campaign;
+import ft.campaign.Exceptions.WrongDataException;
+import ft.campaign.Models.CampaignCreateRequest;
+import ft.campaign.Models.CampaignCreateResponse;
 import ft.campaign.Services.CampaignService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +25,10 @@ public class CampaignController {
     }
 
     @PostMapping
-    public Campaign createCampaign(@RequestBody Campaign request) throws Exception {
-        log.debug("Create campaign request: {}", request);
-        Campaign createCampaignResponse = campaignService.createCampaign(request);
-        log.debug("Campaign response: {}", createCampaignResponse);
+    public CampaignCreateResponse createCampaign(@RequestBody CampaignCreateRequest request) throws WrongDataException {
+        log.info("Create campaign request: {}", request);
+        CampaignCreateResponse createCampaignResponse = campaignService.create(request);
+        log.info("Campaign response: {}", createCampaignResponse);
         return createCampaignResponse;
     }
 

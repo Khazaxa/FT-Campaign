@@ -1,15 +1,19 @@
-package ft.campaign.Dto;
+package ft.campaign.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.Date;
+
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignDto {
+public class CampaignCreateResponse {
+    private Long id;
     private String name;
     private String keywords;
     private double bidAmount;
@@ -17,4 +21,7 @@ public class CampaignDto {
     private boolean status;
     private String city;
     private double radius;
+    private Date createdAt;
+    private Date updatedAt;
+
 }

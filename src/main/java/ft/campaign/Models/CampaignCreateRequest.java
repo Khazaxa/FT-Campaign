@@ -1,15 +1,16 @@
-package ft.campaign.Dto;
+package ft.campaign.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignDto {
+public class CampaignCreateRequest {
     private String name;
     private String keywords;
     private double bidAmount;
