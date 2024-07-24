@@ -404,3 +404,6 @@ FodyWeavers.xsd
 *.md
 *.mvn/wrapper
 *.class
+
+# Ignorowanie katalogu target
+/target/
