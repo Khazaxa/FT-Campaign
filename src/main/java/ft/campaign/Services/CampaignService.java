@@ -26,6 +26,9 @@ public class CampaignService {
     }
 
     public CampaignCreateResponse create(CampaignCreateRequest request) throws WrongDataException {
+        log.info("Validating create campaign request");
+        validate(request);
+
         log.info("Mapping request to campaign: {}", request);
         Campaign campaign = campaignMapper.campaignCreateRequestToCampaign(request);
         log.info("Mapped campaign to be created: {}", campaign);
@@ -44,13 +47,36 @@ public class CampaignService {
             throw new WrongDataException(exception.getMessage());
         }
         log.info("Saved campaign: {}", savedCampaign);
-        CampaignCreateResponse createCarResponse = campaignMapper.campaignToCampaignCreateResponse(savedCampaign);
-        log.info("Mapped car for response: {}", createCarResponse);
-        return createCarResponse;
+        CampaignCreateResponse createCampaignResponse = campaignMapper.campaignToCampaignCreateResponse(savedCampaign);
+        log.info("Mapped campaign for response: {}", createCampaignResponse);
+        return createCampaignResponse;
     }
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
     }
 
+    private void validate(CampaignCreateRequest request) throws WrongDataException {
+        if (request.getName() == null || request.getName().isEmpty()) {
+            throw new WrongDataException("Campaign name is required.");
+        }
+        if (request.getKeywords() == null || request.getKeywords().isEmpty()) {
+            throw new WrongDataException("Campaign keywords are required.");
+        }
+        if (request.getBidAmount() == null) {
+            throw new WrongDataException("Bid amount is required.");
+        }
+        if (Double.compare(request.getBidAmount(), 1.0) < 0) {
+            throw new WrongDataException("Bid amount must be at least 1.");
+        }
+        if (request.getCampaignFund() == null) {
+            throw new WrongDataException("Campaign fund is required.");
+        }
+        if (request.getStatus() == null) {
+            throw new WrongDataException("Campaign status is required.");
+        }
+        if (request.getRadius() == null) {
+            throw new WrongDataException("Campaign radius is required.");
+        }
+    }
 }

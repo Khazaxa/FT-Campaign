@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class CampaignCreateRequest {
     private String name;
     private String keywords;
-    private double bidAmount;
-    private double campaignFund;
-    private boolean status;
+    private Double bidAmount;
+    private Double campaignFund;
+    private Boolean status;
     private String city;
-    private double radius;
+    private Double radius;
 }

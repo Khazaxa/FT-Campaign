@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-24T20:12:16+0200",
+    date = "2024-07-24T21:02:31+0200",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -91,11 +91,19 @@ public class ICampaignMapperImpl implements ICampaignMapper {
 
         campaign.name( campaignCreateRequest.getName() );
         campaign.keywords( campaignCreateRequest.getKeywords() );
-        campaign.bidAmount( campaignCreateRequest.getBidAmount() );
-        campaign.campaignFund( campaignCreateRequest.getCampaignFund() );
-        campaign.status( campaignCreateRequest.isStatus() );
+        if ( campaignCreateRequest.getBidAmount() != null ) {
+            campaign.bidAmount( campaignCreateRequest.getBidAmount() );
+        }
+        if ( campaignCreateRequest.getCampaignFund() != null ) {
+            campaign.campaignFund( campaignCreateRequest.getCampaignFund() );
+        }
+        if ( campaignCreateRequest.getStatus() != null ) {
+            campaign.status( campaignCreateRequest.getStatus() );
+        }
         campaign.city( campaignCreateRequest.getCity() );
-        campaign.radius( campaignCreateRequest.getRadius() );
+        if ( campaignCreateRequest.getRadius() != null ) {
+            campaign.radius( campaignCreateRequest.getRadius() );
+        }
 
         return campaign.build();
     }

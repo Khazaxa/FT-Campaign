@@ -1,6 +1,5 @@
 package ft.campaign.Models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +15,11 @@ public class CampaignCreateResponse {
     private Long id;
     private String name;
     private String keywords;
-    private double bidAmount;
-    private double campaignFund;
-    private boolean status;
+    private Double bidAmount;
+    private Double campaignFund;
+    private Boolean status;
     private String city;
-    private double radius;
+    private Double radius;
     private Date createdAt;
     private Date updatedAt;
-
 }
