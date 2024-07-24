@@ -8,6 +8,7 @@ import ft.campaign.Services.CampaignService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,9 @@ public class CampaignController {
         log.info("Campaign response: {}", createCampaignResponse);
         return createCampaignResponse;
     }
+
+    @PutMapping
+
 
     @GetMapping("/test-connection")
     public List<Campaign> testConnection() {
