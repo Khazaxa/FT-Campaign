@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -65,13 +66,73 @@ public class CampaignService {
 
         Campaign existingCampaign = campaignOptional.get();
         campaignMapper.campaignUpdateRequestToCampaign(request, existingCampaign);
+        existingCampaign.setUpdatedAt(LocalDateTime.now());
         Campaign updatedCampaign = campaignRepository.save(existingCampaign);
         log.info("Successfully updated campaign with id: {}", id);
         return campaignMapper.campaignToCampaignUpdateResponse(updatedCampaign);
     }
 
-    public List<Campaign> getAllCampaigns() {
-        return campaignRepository.findAll();
+    public CampaignResponse activate(Long id) throws WrongDataException {
+        log.info("Activating campaign with id: {}", id);
+        Optional<Campaign> campaignOptional = campaignRepository.findCampaignById(id);
+        if (campaignOptional.isEmpty()) {
+            log.info("Campaign with id {} was not found", id);
+            throw new WrongDataException("Campaign was not found.");
+        }
+        Campaign campaign = campaignOptional.get();
+        campaign.setStatus(true);
+        campaign.setUpdatedAt(LocalDateTime.now());
+        Campaign updatedCampaign = campaignRepository.save(campaign);
+        log.info("Successfully activated campaign with id: {}", id);
+        return campaignMapper.campaignToCampaignUpdateResponse(updatedCampaign);
+    }
+
+    public CampaignResponse deactivate(Long id) throws WrongDataException {
+        log.info("Deactivating campaign with id: {}", id);
+        Optional<Campaign> campaignOptional = campaignRepository.findCampaignById(id);
+        if (campaignOptional.isEmpty()) {
+            log.info("Campaign with id {} was not found", id);
+            throw new WrongDataException("Campaign was not found.");
+        }
+        Campaign campaign = campaignOptional.get();
+        campaign.setStatus(false);
+        campaign.setUpdatedAt(LocalDateTime.now());
+        Campaign updatedCampaign = campaignRepository.save(campaign);
+        log.info("Successfully deactivated campaign with id: {}", id);
+        return campaignMapper.campaignToCampaignUpdateResponse(updatedCampaign);
+    }
+
+    public CampaignResponse getById(Long id) throws WrongDataException {
+        log.info("Getting campaign by id: {}", id);
+        Optional<Campaign> campaignOptional = campaignRepository.findCampaignById(id);
+        if (campaignOptional.isEmpty()) {
+            log.info("Campaign with id {} was not found", id);
+            throw new WrongDataException("Campaign was not found.");
+        }
+        Campaign campaign = campaignOptional.get();
+        log.info("Campaign by id: {}", campaign);
+        return campaignMapper.campaignToCampaignUpdateResponse(campaign);
+    }
+
+    public List<CampaignResponse> getAll() throws WrongDataException {
+        List<Campaign> campaigns = campaignRepository.findAll();
+        if (campaigns.isEmpty()) {
+            throw new WrongDataException("No campaigns found.");
+        }
+        return campaigns.stream()
+                .map(campaignMapper::campaignToCampaignUpdateResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void delete(Long campaignId) throws WrongDataException {
+        Optional<Campaign> campaign = campaignRepository.findCampaignById(campaignId);
+        if (campaign.isEmpty()) {
+            throw new WrongDataException("Campaign was not found.");
+        }
+        log.info("Found campaign: {}", campaign);
+        log.info("Requesting to delete campaign: {}", campaignId);
+        campaignRepository.deleteCampaignById(campaignId);
+        log.info("Successfully deleted campaign: {}", campaignId);
     }
 
     private void validate(CampaignRequest request) throws WrongDataException {
