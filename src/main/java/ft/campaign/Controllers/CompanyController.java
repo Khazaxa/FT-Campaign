@@ -37,14 +37,6 @@ public class CompanyController {
         return emeraldBalance;
     }
 
-//    @GetMapping("/campaign/{campaignId}")
-//    public CampaignResponse getCampaignById(@PathVariable Long campaignId) throws WrongDataException{
-//        log.info("Getting campaign by id: {}", campaignId);
-//        CampaignResponse campaignResponse = campaignService.getById(campaignId);
-//        log.info("Campaign by id: {}", campaignResponse);
-//        return campaignResponse;
-//    }
-
     @DeleteMapping("/company/{companyId}")
     public void deleteCompany(Long companyId) {
         log.info("Deleting company with id: {}", companyId);
