@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Campaign Management</h1>
+  
+    <div class="campaign">
+      <button (click)="showForm = true">Create Campaign</button>
+  
+      <div *ngIf="showForm">
+        <form (ngSubmit)="onSubmit()" #campaignForm="ngForm">
+          <label for="name">Campaign Name:</label>
+          <input type="text" id="name" [(ngModel)]="campaign.name" name="name" required>
+  
+          <label for="keywords">Keywords:</label>
+          <input type="text" id="keywords" [(ngModel)]="campaign.keywords" name="keywords" required>
+  
+          <label for="bidAmount">Bid Amount:</label>
+          <input type="number" id="bidAmount" [(ngModel)]="campaign.bidAmount" name="bidAmount" required>
+  
+          <label for="campaignFound">Campaign Found:</label>
+          <input type="number" id="campaignFound" [(ngModel)]="campaign.campaignFound" name="campaignFound">
+  
+          <label for="status">Status:</label>
+          <input type="text" id="status" [(ngModel)]="campaign.status" name="status" required>
+  
+          <label for="city">City:</label>
+          <input type="text" id="city" [(ngModel)]="campaign.city" name="city" required>
+  
+          <label for="radius">Radius:</label>
+          <input type="number" id="radius" [(ngModel)]="campaign.radius" name="radius" required>
+  
+          <button type="submit" [disabled]="!campaignForm.form.valid">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
