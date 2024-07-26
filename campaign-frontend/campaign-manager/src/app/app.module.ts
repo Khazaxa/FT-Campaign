@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from '../app/app.routing.module';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module';
+import { CampaignsComponent } from './components/campaigns/campaigns.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppRoutingModule,
-    HttpClientModule
+    CampaignsComponent,
+    CompaniesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

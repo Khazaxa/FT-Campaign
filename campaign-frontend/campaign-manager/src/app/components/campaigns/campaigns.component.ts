@@ -19,14 +19,14 @@ export class CampaignsComponent implements OnInit {
     this.apiService.getCampaigns().subscribe(data => this.campaigns = data);
   }
 
+  createCampaign(): void {
+    // Implement logic to create a new campaign
+    const newCampaign = { name: 'New Campaign' }; // Example data
+    this.apiService.createCampaign(newCampaign).subscribe(() => this.loadCampaigns());
+  }
+
   editCampaign(id: string): void {
-    this.apiService.getCampaign(id).subscribe(data => {
-      const name = prompt('Enter campaign name:', data.name);
-      if (name) {
-        this.apiService.updateCampaign(id, { name }).subscribe(() => this.loadCampaigns());
-      }
-    }
-    );
+    // Implement logic to edit a campaign
   }
 
   deleteCampaign(id: string): void {
