@@ -9,7 +9,9 @@ import ft.campaign.Repositories.ICompanyRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -50,5 +52,12 @@ public class CompanyService {
         }
         Company company = companyOptional.get();
         return company.getEmeraldAccountBalance();
+    }
+
+    public List<CompanyResponse> getAllCompanies() {
+        List<Company> companies = companyRepository.findAll();
+        return companies.stream()
+                .map(companyMapper::companyToCreateCompanyResponse)
+                .collect(Collectors.toList());
     }
 }

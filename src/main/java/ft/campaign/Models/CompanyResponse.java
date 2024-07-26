@@ -18,5 +18,4 @@ public class CompanyResponse {
     private String country;
     private String email;
     private String phoneNumber;
-    private Long companyId;
 }
