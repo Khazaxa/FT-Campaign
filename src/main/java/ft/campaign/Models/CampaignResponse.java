@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CampaignResponse {
@@ -20,7 +20,7 @@ public class CampaignResponse {
     private Boolean status;
     private String city;
     private Double radius;
+    private Long companyId;
     private Date createdAt;
     private Date updatedAt;
-    private Long companyId;
 }

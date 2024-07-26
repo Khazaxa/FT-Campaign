@@ -41,9 +41,9 @@ public class CampaignController {
     }
 
     @PutMapping("/campaign/{campaignId}/activate")
-    public CampaignResponse activateCampaign(@PathVariable Long campaignId) throws WrongDataException {
-        log.info("Activating campaign with id: {}", campaignId);
-        CampaignResponse activateCampaignResponse = campaignService.activate(campaignId);
+    public CampaignResponse activateCampaign(@PathVariable Long campaignId, Long companyId) throws WrongDataException {
+        log.info("Activating campaign with id: {} for company with id: {}", campaignId, companyId);
+        CampaignResponse activateCampaignResponse = campaignService.activate(campaignId, companyId);
         log.info("Activated campaign: {}", activateCampaignResponse);
         return activateCampaignResponse;
     }
