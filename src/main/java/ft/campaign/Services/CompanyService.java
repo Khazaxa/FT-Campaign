@@ -43,20 +43,12 @@ public class CompanyService {
         log.info("Successfully deleted company with id: {}", id);
     }
 
-
-    public void deductCampaignFund(Long companyId, Double campaignFund) throws WrongDataException {
+    public Double getEmeraldBalance(Long companyId) throws WrongDataException{
         Optional<Company> companyOptional = companyRepository.findById(companyId);
         if (companyOptional.isEmpty()) {
             throw new WrongDataException("Company not found.");
         }
         Company company = companyOptional.get();
-
-        if (company.getEmeraldAccountBalance() < campaignFund) {
-            throw new WrongDataException("Insufficient funds in Emerald account.");
-        }
-
-        company.setEmeraldAccountBalance(company.getEmeraldAccountBalance() - campaignFund);
-        companyRepository.save(company);
+        return company.getEmeraldAccountBalance();
     }
-
 }
