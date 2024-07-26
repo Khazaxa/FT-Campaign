@@ -14,7 +14,6 @@ public class CampaignRequest {
     private String keywords;
     private Double bidAmount;
     private Double campaignFund;
-    private Boolean status;
     private String city;
     private Double radius;
 }

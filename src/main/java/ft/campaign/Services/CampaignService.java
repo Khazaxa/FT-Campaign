@@ -35,6 +35,7 @@ public class CampaignService {
         validate(request);
 
         Campaign campaign = campaignMapper.campaignCreateRequestToCampaign(request);
+        campaign.setStatus(false);
         campaign.setCreatedAt(LocalDateTime.now());
         campaign.setUpdatedAt(LocalDateTime.now());
         Campaign savedCampaign = campaignRepository.save(campaign);
@@ -56,6 +57,7 @@ public class CampaignService {
 
         Campaign existingCampaign = campaignOptional.get();
         campaignMapper.campaignUpdateRequestToCampaign(request, existingCampaign);
+        existingCampaign.setStatus(false);
         existingCampaign.setUpdatedAt(LocalDateTime.now());
         Campaign updatedCampaign = campaignRepository.save(existingCampaign);
         log.info("Successfully updated campaign with id: {}", id);
@@ -159,9 +161,6 @@ public class CampaignService {
         }
         if (request.getCampaignFund() == null) {
             throw new WrongDataException("Campaign fund is required.");
-        }
-        if (request.getStatus() == null) {
-            throw new WrongDataException("Campaign status is required.");
         }
         if (request.getRadius() == null) {
             throw new WrongDataException("Campaign radius is required.");

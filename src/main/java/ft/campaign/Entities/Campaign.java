@@ -17,13 +17,19 @@ public class Campaign {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String keywords;
-    private double bidAmount;
-    private double campaignFund;
-    private boolean status;
+    @Column(nullable = false)
+    private Double bidAmount;
+    @Column(nullable = false)
+    private Double campaignFund;
+    @Column(nullable = false)
+    private Boolean status = false;
     private String city;
-    private double radius; // in kilometers
+    @Column(nullable = false)
+    private Double radius; // in kilometers
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
