@@ -1,0 +1,12 @@
+<div>
+    <h2>Companies</h2>
+    <button (click)="loadCompanies()">Load Companies</button>
+    <ul>
+      <li *ngFor="let company of companies">
+        {{ company.name }}
+        <button (click)="loadBalance(company.id)">View Balance</button>
+        <button (click)="deleteCompany(company.id)">Delete</button>
+      </li>
+    </ul>
+    <app-balance *ngIf="selectedCompanyId" [companyId]="selectedCompanyId"></app-balance>
+  </div>

@@ -1,0 +1,13 @@
+<div>
+    <h2>Campaigns</h2>
+    <button (click)="loadCampaigns()">Load Campaigns</button>
+    <ul>
+      <li *ngFor="let campaign of campaigns">
+        {{ campaign.name }}
+        <button (click)="editCampaign(campaign.id)">Edit</button>
+        <button (click)="deleteCampaign(campaign.id)">Delete</button>
+      </li>
+    </ul>
+    <h2>Campaign</h2>
+    <button (click)="createCampaign()">Create Campaign</button>
+  </div>
