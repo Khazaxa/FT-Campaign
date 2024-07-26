@@ -65,7 +65,7 @@ public class CampaignController {
     }
 
     @GetMapping("campaigns")
-    public List<CampaignResponse> testConnection() throws WrongDataException{
+    public List<CampaignResponse> getAll() throws WrongDataException{
         log.debug("Attempting to get all campaigns");
         return campaignService.getAll();
     }

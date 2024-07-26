@@ -1,58 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { CampaignResponse } from '../components/campaigns/models/campaign-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:8080';
-  constructor(private http: HttpClient) { }
-  
-  // Campaign
-  createCampaign(campaign: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/campaign`, campaign);
+  private apiUrl = 'http://localhost:8080';
+
+  constructor(private http: HttpClient) {}
+
+  getCampaigns(): Observable<CampaignResponse[]> {
+    return this.http.get<CampaignResponse[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getCampaigns(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/campaigns`);
-  }
-
-  getCampaign(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/campaign/${id}`);
-  }
-
-  updateCampaign(id: string, campaign: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/campaign/${id}`, campaign);
-  }
-
-  deleteCampaign(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/campaign/${id}`);
-  }
-
-  activateCampaign(id: string): Observable<any> {
-    return this.http.put(`${this.baseUrl}/campaign/${id}/activate`, {});
-  }
-
-  deactivateCampaign(id: string): Observable<any> {
-    return this.http.put(`${this.baseUrl}/campaign/${id}/deactivate`, {});
-  }
-
-  // Company
-
-  createCompany(company: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/company`, company);
-  }
-
-  getCompanies(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/companies`);
-  }
-
-  getCompanyBalance(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/company/${id}/balance`);
-  }
-
-  deleteCompany(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/company/${id}`);
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Client-side error: ${error.error.message}`;
+    } else {
+      errorMessage = `Server-side error: ${error.status} ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }

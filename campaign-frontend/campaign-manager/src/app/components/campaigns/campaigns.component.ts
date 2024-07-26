@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
+import { CampaignResponse } from './models/campaign-response.model';
 
 @Component({
   selector: 'app-campaigns',
@@ -7,7 +8,9 @@ import { ApiService } from '../../service/api.service';
   styleUrls: ['./campaigns.component.css']
 })
 export class CampaignsComponent implements OnInit {
-  campaigns: any[] = [];
+  campaigns: CampaignResponse[] = [];
+  loading = false;
+  errorMessage: string | null = null;
 
   constructor(private apiService: ApiService) { }
 
@@ -16,20 +19,16 @@ export class CampaignsComponent implements OnInit {
   }
 
   loadCampaigns(): void {
-    this.apiService.getCampaigns().subscribe(data => this.campaigns = data);
-  }
-
-  createCampaign(): void {
-    // Implement logic to create a new campaign
-    const newCampaign = { name: 'New Campaign' }; // Example data
-    this.apiService.createCampaign(newCampaign).subscribe(() => this.loadCampaigns());
-  }
-
-  editCampaign(id: string): void {
-    // Implement logic to edit a campaign
-  }
-
-  deleteCampaign(id: string): void {
-    this.apiService.deleteCampaign(id).subscribe(() => this.loadCampaigns());
+    this.loading = true;
+    this.apiService.getCampaigns().subscribe(
+      data => {
+        this.campaigns = data;
+        this.loading = false;
+      },
+      error => {
+        this.errorMessage = error;
+        this.loading = false;
+      }
+    );
   }
 }

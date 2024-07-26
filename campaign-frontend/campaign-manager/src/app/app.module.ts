@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { CampaignsComponent } from './components/campaigns/campaigns.component';
 import { CompaniesComponent } from './components/companies/companies.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -14,10 +15,12 @@ import { CompaniesComponent } from './components/companies/companies.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    CommonModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withFetch())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

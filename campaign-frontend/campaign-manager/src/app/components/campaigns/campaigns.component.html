@@ -1,13 +1,20 @@
 <div>
-    <h2>Campaigns</h2>
-    <button (click)="loadCampaigns()">Load Campaigns</button>
-    <ul>
-      <li *ngFor="let campaign of campaigns">
-        {{ campaign.name }}
-        <button (click)="editCampaign(campaign.id)">Edit</button>
-        <button (click)="deleteCampaign(campaign.id)">Delete</button>
-      </li>
-    </ul>
-    <h2>Campaign</h2>
-    <button (click)="createCampaign()">Create Campaign</button>
+  <h2>Campaigns</h2>
+  <button (click)="loadCampaigns()" [disabled]="loading">Load Campaigns</button>
+  
+  <div *ngIf="loading">Loading campaigns...</div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
   </div>
+  
+  <ul *ngIf="!loading && !errorMessage">
+    <li *ngFor="let campaign of campaigns">
+      {{ campaign.name }}
+    </li>
+  </ul>
+  
+  <div *ngIf="!loading && !errorMessage && campaigns.length === 0">
+    No campaigns found.
+  </div>
+</div>
