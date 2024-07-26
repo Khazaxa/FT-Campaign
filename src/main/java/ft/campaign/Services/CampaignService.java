@@ -21,33 +21,22 @@ public class CampaignService {
 
     private final ICampaignRepository campaignRepository;
     private final ICampaignMapper campaignMapper;
+    private final CompanyService companyService;
 
-    public CampaignService(ICampaignRepository campaignRepository, ICampaignMapper campaignMapper) {
+    public CampaignService(ICampaignRepository campaignRepository, ICampaignMapper campaignMapper, CompanyService companyService) {
         this.campaignRepository = campaignRepository;
         this.campaignMapper = campaignMapper;
+        this.companyService = companyService;
     }
 
     public CampaignResponse create(CampaignRequest request) throws WrongDataException {
-        log.info("Validating create campaign request");
+        log.info("Creating campaign: {}", request);
         validate(request);
 
-        log.info("Mapping request to campaign: {}", request);
         Campaign campaign = campaignMapper.campaignCreateRequestToCampaign(request);
-        log.info("Mapped campaign to be created: {}", campaign);
-
-        List<Campaign> existingCampaigns = campaignRepository.findCampaignByName(campaign.getName());
-        if (!existingCampaigns.isEmpty()) {
-            throw new WrongDataException("A campaign with the same name already exists.");
-        }
-
         campaign.setCreatedAt(LocalDateTime.now());
-
-        Campaign savedCampaign;
-        try {
-            savedCampaign = campaignRepository.save(campaign);
-        } catch (DataIntegrityViolationException exception) {
-            throw new WrongDataException(exception.getMessage());
-        }
+        campaign.setUpdatedAt(LocalDateTime.now());
+        Campaign savedCampaign = campaignRepository.save(campaign);
         log.info("Saved campaign: {}", savedCampaign);
         CampaignResponse createCampaignResponse = campaignMapper.campaignToCampaignCreateResponse(savedCampaign);
         log.info("Mapped campaign for response: {}", createCampaignResponse);

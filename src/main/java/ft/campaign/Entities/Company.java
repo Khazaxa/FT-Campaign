@@ -19,6 +19,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Double emeraldAccountBalance;
     private String address;
     private String city;
     private String country;

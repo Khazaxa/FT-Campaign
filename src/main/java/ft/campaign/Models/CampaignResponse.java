@@ -22,4 +22,5 @@ public class CampaignResponse {
     private Double radius;
     private Date createdAt;
     private Date updatedAt;
+    private Long companyId;
 }

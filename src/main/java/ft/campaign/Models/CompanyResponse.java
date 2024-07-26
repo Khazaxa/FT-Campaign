@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
 public class CompanyResponse {
     private Long id;
     private String name;
+    private Double emeraldAccountBalance;
     private String address;
     private String city;
     private String country;
     private String email;
     private String phoneNumber;
+    private Long companyId;
 }
