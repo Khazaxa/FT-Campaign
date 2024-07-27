@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class CampaignController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/campaign/{campaignId}/activate")
-    public CampaignResponse activateCampaign(@PathVariable Long campaignId, Long companyId) throws WrongDataException {
+    public CampaignResponse activateCampaign(@PathVariable Long campaignId, @RequestParam Long companyId) throws WrongDataException {
         log.info("Activating campaign with id: {} for company with id: {}", campaignId, companyId);
         CampaignResponse activateCampaignResponse = campaignService.activate(campaignId, companyId);
         log.info("Activated campaign: {}", activateCampaignResponse);

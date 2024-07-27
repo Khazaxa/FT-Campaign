@@ -59,6 +59,7 @@
         Phone Number: {{ comp.phoneNumber }}<br>
         <button (click)="deleteCompany(comp.id)">Delete</button>
         <button (click)="fetchBalance(comp)">Show Balance</button>
+        <button (click)="selectCompany(comp.id)">Choose</button>
       </li>
     </ul>
     <ng-template #noCompanies>

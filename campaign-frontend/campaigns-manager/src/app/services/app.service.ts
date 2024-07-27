@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError, Observable, throwError} from 'rxjs';
 import { Campaign } from '../components/campaigns/models/campaign';
 import { Company } from '../components/companies/models/company';
 
@@ -27,6 +27,19 @@ export class AppService {
 
   deleteCampaign(campaignId: number): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/campaign/${campaignId}`);
+  }
+
+  activateCampaign(campaignId: number, companyId: number): Observable<void> {
+    return this.http.put<void>(`${this.API_URL}/campaign/${campaignId}/activate?companyId=${companyId}`, null).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error activating campaign', error);
+        return throwError(() => new Error('Error activating campaign'));
+      })
+    );
+  }
+
+  deactivateCampaign(campaignId: number): Observable<void> {
+    return this.http.put<void>(`${this.API_URL}/campaign/${campaignId}/deactivate`, null);
   }
 
   // Company methods

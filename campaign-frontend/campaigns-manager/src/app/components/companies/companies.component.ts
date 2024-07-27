@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Company } from './models/company';
 import { AppService } from '../../services/app.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-companies',
@@ -27,7 +28,7 @@ export class CompaniesComponent {
   showForm = false;
   showCompanies = false;
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private sharedService: SharedService) { }
 
   onSubmit() {
     this.appService.addCompany(this.company).subscribe({
@@ -87,6 +88,11 @@ export class CompaniesComponent {
         console.error('Error fetching company balance', error);
       }
     });
+  }
+
+  selectCompany(companyId: number) {
+    this.sharedService.setSelectedCompanyId(companyId);
+    console.log('Selected company ID:', companyId);
   }
 
   resetForm() {

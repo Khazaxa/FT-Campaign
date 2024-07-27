@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Campaign } from './models/campaign';
 import { AppService } from '../../services/app.service';
 import { Cities } from './models/Cities';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -18,8 +19,8 @@ export class CampaignsComponent {
     name: '',
     keywords: '',
     bidAmount: 0,
-    campaignFund: false,
-    status: '',
+    campaignFund: 0,
+    status: false,
     city: '',
     radius: 0
   };
@@ -31,7 +32,7 @@ export class CampaignsComponent {
   keywordOptions: string[] = ['Marketing', 'Sales', 'Technology', 'Finance'];
   isEditing = false;
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private sharedService: SharedService) { }
 
   onSubmit() {
     if (this.isEditing) {
@@ -101,14 +102,44 @@ export class CampaignsComponent {
     });
   }
 
+  activateCampaign(campaignId: number) {
+    const companyId = this.sharedService.getSelectedCompanyId();
+    if (companyId === null) {
+      console.error('No company selected');
+      return;
+    }
+    this.appService.activateCampaign(campaignId, companyId).subscribe({
+      next: () => {
+        console.log('Campaign activated successfully');
+        this.loadCampaigns();
+      },
+      error: (error) => {
+        console.error('Error activating campaign', error);
+        alert(`Error activating campaign: ${error.message}`);
+      }
+    });
+  }
+
+  deactivateCampaign(campaignId: number) {
+    this.appService.deactivateCampaign(campaignId).subscribe({
+      next: () => {
+        console.log('Campaign deactivated successfully');
+        this.loadCampaigns();
+      },
+      error: (error) => {
+        console.error('Error deactivating campaign', error);
+      }
+    });
+  }
+
   resetForm() {
     this.campaign = {
       id: 0,
       name: '',
       keywords: '',
       bidAmount: 0,
-      campaignFund: false,
-      status: '',
+      campaignFund: 0,
+      status: false,
       city: '',
       radius: 0
     };
