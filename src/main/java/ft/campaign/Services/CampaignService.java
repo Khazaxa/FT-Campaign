@@ -66,11 +66,12 @@ public class CampaignService {
 
     public CampaignResponse activate(Long campaignId, Long companyId) throws WrongDataException {
         log.info("Activating campaign with id: {}", campaignId);
-
+        if (campaignId == null || companyId == null) {
+            throw new IllegalArgumentException("The given id must not be null");
+        }
         Optional<Campaign> campaignOptional = campaignRepository.findById(campaignId);
         if (campaignOptional.isEmpty()) {
-            log.info("Campaign with id {} was not found", campaignId);
-            throw new WrongDataException("Campaign was not found.");
+            throw new WrongDataException("Campaign not found.");
         }
 
         Optional<Company> companyOptional = companyRepository.findById(companyId);

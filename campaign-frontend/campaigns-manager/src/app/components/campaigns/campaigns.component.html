@@ -1,0 +1,61 @@
+<div class="container">
+  <nav>
+    <button (click)="toggleForm()">{{ showForm ? 'Hide Campaign Form' : 'Create Campaign' }}</button>
+    <button (click)="toggleCampaigns()">{{ showCampaigns ? 'Hide All Campaigns' : 'Show All Campaigns' }}</button>
+  </nav>
+
+  <div *ngIf="showForm" class="form-section">
+    <h2>{{ isEditing ? 'Edit Campaign' : 'Create Campaign' }}</h2>
+    <form (ngSubmit)="onSubmit()" #campaignForm="ngForm">
+      <label for="name">Campaign Name:</label>
+      <input type="text" id="name" [(ngModel)]="campaign.name" name="name" required>
+
+      <label for="keywords">Keywords:</label>
+      <input type="text" id="keywords" [(ngModel)]="campaign.keywords" name="keywords" required list="keywordOptions">
+      <datalist id="keywordOptions">
+        <option *ngFor="let keyword of keywordOptions" [value]="keyword"></option>
+      </datalist>
+
+      <label for="bidAmount">Bid Amount:</label>
+      <input type="number" id="bidAmount" [(ngModel)]="campaign.bidAmount" name="bidAmount" required>
+
+      <label for="campaignFund">Campaign Fund:</label>
+      <input type="number" id="campaignFund" [(ngModel)]="campaign.campaignFund" name="campaignFund">
+
+      <label for="status">Status:</label>
+      <input type="checkbox" id="status" [(ngModel)]="campaign.status" name="status">
+
+      <label for="city">City:</label>
+      <select id="city" [(ngModel)]="campaign.city" name="city" required>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+
+      <label for="radius">Radius:</label>
+      <input type="number" id="radius" [(ngModel)]="campaign.radius" name="radius" required>
+
+      <button type="submit" [disabled]="!campaignForm.form.valid">{{ isEditing ? 'Save' : 'Create' }}</button>
+    </form>
+  </div>
+
+  <div *ngIf="showCampaigns" class="list-section">
+    <h2>All Campaigns</h2>
+    <ul *ngIf="campaigns.length > 0; else noCampaigns">
+      <li *ngFor="let camp of campaigns">
+        <strong>{{ camp.name }}</strong><br>
+        Keywords: {{ camp.keywords }}<br>
+        Bid Amount: {{ camp.bidAmount }}<br>
+        Campaign Fund: {{ camp.campaignFund }}<br>
+        City: {{ camp.city }}<br>
+        Radius: {{ camp.radius }}<br>
+        Status: {{ camp.status ? 'Active' : 'Inactive' }}<br>
+        <button (click)="editCampaign(camp)" style="background-color: orange;">Edit</button>
+        <button (click)="deleteCampaign(camp.id)" style="background-color: red;">Delete</button>
+        <button (click)="activateCampaign(camp.id)" style="background-color: green;">Activate</button>
+        <button (click)="deactivateCampaign(camp.id)" style="background-color: gray;">Deactivate</button>
+      </li>
+    </ul>
+    <ng-template #noCampaigns>
+      <p>No campaigns to show</p>
+    </ng-template>
+  </div>
+</div>

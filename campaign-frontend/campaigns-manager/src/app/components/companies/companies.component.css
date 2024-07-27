@@ -1,0 +1,11 @@
+.container {
+  padding: 20px;
+}
+
+.form-section, .list-section {
+  margin-top: 20px;
+}
+
+nav button {
+  margin-right: 10px;
+}

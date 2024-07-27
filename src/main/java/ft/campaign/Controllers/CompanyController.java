@@ -5,6 +5,7 @@ import ft.campaign.Models.CompanyRequest;
 import ft.campaign.Models.CompanyResponse;
 import ft.campaign.Services.CompanyService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/company")
     public void createCompany(@RequestBody CompanyRequest request) {
         log.info("Creating company");
@@ -30,6 +32,7 @@ public class CompanyController {
         log.info("Company created");
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/company/{companyId}/balance")
     public Double getCompanyEmeraldBalance(@PathVariable Long companyId) throws WrongDataException{
         log.info("Getting company emerald balance by id: {}", companyId);
@@ -38,6 +41,7 @@ public class CompanyController {
         return emeraldBalance;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/companies")
     public List<CompanyResponse> getAllCompanies() {
         log.info("Getting all companies");
@@ -46,8 +50,9 @@ public class CompanyController {
         return companies;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/company/{companyId}")
-    public void deleteCompany(Long companyId) {
+    public void deleteCompany(@PathVariable Long companyId) {
         log.info("Deleting company with id: {}", companyId);
         companyService.delete(companyId);
         log.info("Company with id {} deleted", companyId);
