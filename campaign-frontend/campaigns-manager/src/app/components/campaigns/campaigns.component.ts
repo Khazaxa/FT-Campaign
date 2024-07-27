@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Campaign } from './models/campaign';
 import { AppService } from '../../services/app.service';
 import { Cities } from './models/Cities';
@@ -10,7 +10,7 @@ import { Cities } from './models/Cities';
   standalone: true,
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class CampaignsComponent {
   campaign: Campaign = {
@@ -28,6 +28,7 @@ export class CampaignsComponent {
   showForm = false;
   showCampaigns = false;
   cities = Object.values(Cities);
+  keywordOptions: string[] = ['Marketing', 'Sales', 'Technology', 'Finance'];
 
   constructor(private appService: AppService) { }
 

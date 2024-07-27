@@ -11,7 +11,10 @@
       <input type="text" id="name" [(ngModel)]="campaign.name" name="name" required>
 
       <label for="keywords">Keywords:</label>
-      <input type="text" id="keywords" [(ngModel)]="campaign.keywords" name="keywords" required>
+      <input type="text" id="keywords" [(ngModel)]="campaign.keywords" name="keywords" required list="keywordOptions">
+      <datalist id="keywordOptions">
+        <option *ngFor="let keyword of keywordOptions" [value]="keyword"></option>
+      </datalist>
 
       <label for="bidAmount">Bid Amount:</label>
       <input type="number" id="bidAmount" [(ngModel)]="campaign.bidAmount" name="bidAmount" required>
