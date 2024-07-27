@@ -29,21 +29,36 @@ export class CampaignsComponent {
   showCampaigns = false;
   cities = Object.values(Cities);
   keywordOptions: string[] = ['Marketing', 'Sales', 'Technology', 'Finance'];
+  isEditing = false;
 
   constructor(private appService: AppService) { }
 
   onSubmit() {
-    this.appService.addCampaign(this.campaign).subscribe({
-      next: (newCampaign) => {
-        console.log('Campaign added successfully', newCampaign);
-        this.showForm = false;
-        this.resetForm();
-        this.loadCampaigns();
-      },
-      error: (error) => {
-        console.error('Error adding campaign', error);
-      }
-    });
+    if (this.isEditing) {
+      this.appService.updateCampaign(this.campaign).subscribe({
+        next: (updatedCampaign) => {
+          console.log('Campaign updated successfully', updatedCampaign);
+          this.showForm = false;
+          this.resetForm();
+          this.loadCampaigns();
+        },
+        error: (error) => {
+          console.error('Error updating campaign', error);
+        }
+      });
+    } else {
+      this.appService.addCampaign(this.campaign).subscribe({
+        next: (newCampaign) => {
+          console.log('Campaign added successfully', newCampaign);
+          this.showForm = false;
+          this.resetForm();
+          this.loadCampaigns();
+        },
+        error: (error) => {
+          console.error('Error adding campaign', error);
+        }
+      });
+    }
   }
 
   toggleForm() {
@@ -68,6 +83,24 @@ export class CampaignsComponent {
     });
   }
 
+  editCampaign(campaign: Campaign) {
+    this.campaign = { ...campaign };
+    this.isEditing = true;
+    this.showForm = true;
+  }
+
+  deleteCampaign(campaignId: number) {
+    this.appService.deleteCampaign(campaignId).subscribe({
+      next: () => {
+        console.log('Campaign deleted successfully');
+        this.campaigns = this.campaigns.filter(c => c.id !== campaignId);
+      },
+      error: (error) => {
+        console.error('Error deleting campaign', error);
+      }
+    });
+  }
+
   resetForm() {
     this.campaign = {
       id: 0,
@@ -79,5 +112,6 @@ export class CampaignsComponent {
       city: '',
       radius: 0
     };
+    this.isEditing = false;
   }
 }

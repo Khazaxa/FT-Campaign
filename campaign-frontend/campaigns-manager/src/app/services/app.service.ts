@@ -21,6 +21,14 @@ export class AppService {
     return this.http.get<Campaign[]>(`${this.API_URL}/campaigns`);
   }
 
+  updateCampaign(campaign: Campaign): Observable<Campaign> {
+    return this.http.put<Campaign>(`${this.API_URL}/campaign/${campaign.id}`, campaign);
+  }
+
+  deleteCampaign(campaignId: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/campaign/${campaignId}`);
+  }
+
   // Company methods
   addCompany(company: Company): Observable<Company> {
     return this.http.post<Company>(`${this.API_URL}/company`, company);
