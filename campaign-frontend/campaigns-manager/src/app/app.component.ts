@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CampaignsComponent } from './components/campaigns/campaigns.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CampaignsComponent, CompaniesComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'campaign-manager';

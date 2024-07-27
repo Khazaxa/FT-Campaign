@@ -34,9 +34,9 @@
     </form>
   </div>
 
-  <div *ngIf="showCampaigns && campaigns.length > 0" class="list-section">
+  <div *ngIf="showCampaigns" class="list-section">
     <h2>All Campaigns</h2>
-    <ul>
+    <ul *ngIf="campaigns.length > 0; else noCampaigns">
       <li *ngFor="let camp of campaigns">
         <strong>{{ camp.name }}</strong><br>
         Keywords: {{ camp.keywords }}<br>
@@ -46,5 +46,8 @@
         Radius: {{ camp.radius }}<br>
       </li>
     </ul>
+    <ng-template #noCampaigns>
+      <p>No campaigns to show</p>
+    </ng-template>
   </div>
 </div>

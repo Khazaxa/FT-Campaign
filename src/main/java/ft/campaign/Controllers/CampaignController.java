@@ -34,6 +34,7 @@ public class CampaignController {
         return createCampaignResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/campaign/{campaignId}")
     public CampaignResponse updateCampaign(@PathVariable Long campaignId, @RequestBody CampaignRequest request) throws WrongDataException {
         log.info("Update campaign request for id {}: {}", campaignId, request);
@@ -42,6 +43,7 @@ public class CampaignController {
         return updateCampaignResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/campaign/{campaignId}/activate")
     public CampaignResponse activateCampaign(@PathVariable Long campaignId, Long companyId) throws WrongDataException {
         log.info("Activating campaign with id: {} for company with id: {}", campaignId, companyId);
@@ -50,6 +52,7 @@ public class CampaignController {
         return activateCampaignResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/campaign/{campaignId}/deactivate")
     public CampaignResponse deactivateCampaign(@PathVariable Long campaignId) throws WrongDataException {
         log.info("Deactivating campaign with id: {}", campaignId);
@@ -58,6 +61,7 @@ public class CampaignController {
         return deactivateCampaignResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/campaign/{campaignId}")
     public CampaignResponse getCampaignById(@PathVariable Long campaignId) throws WrongDataException{
         log.info("Getting campaign by id: {}", campaignId);
@@ -73,6 +77,7 @@ public class CampaignController {
         return campaignService.getAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/campaign/{campaignId}")
     public void deleteCampaign(@PathVariable Long campaignId) throws WrongDataException {
         log.info("Deleting campaign by id: {}", campaignId);

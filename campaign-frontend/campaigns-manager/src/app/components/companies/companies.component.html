@@ -1,1 +1,68 @@
-<p>companies works!</p>
+<div class="container">
+  <nav>
+    <button (click)="toggleForm()">{{ showForm ? 'Hide Company Form' : 'Create Company' }}</button>
+    <button (click)="toggleCompanies()">{{ showCompanies ? 'Hide All Companies' : 'Show All Companies' }}</button>
+  </nav>
+
+  <div *ngIf="showForm" class="form-section">
+    <h2>Create Company</h2>
+    <form (ngSubmit)="onSubmit()" #companyForm="ngForm">
+      <div class="form-group">
+        <label for="name">Company Name:</label>
+        <input type="text" id="name" [(ngModel)]="company.name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="emeraldAccountBalance">Emerald Account Balance:</label>
+        <input type="number" id="emeraldAccountBalance" [(ngModel)]="company.emeraldAccountBalance" name="emeraldAccountBalance" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" [(ngModel)]="company.address" name="address" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" [(ngModel)]="company.city" name="city" required>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" id="country" [(ngModel)]="company.country" name="country" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="company.email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" [(ngModel)]="company.phoneNumber" name="phoneNumber" required>
+      </div>
+
+      <button type="submit" [disabled]="!companyForm.form.valid">Create</button>
+    </form>
+  </div>
+
+  <div *ngIf="showCompanies" class="list-section">
+    <h2>All Companies</h2>
+    <ul *ngIf="companies.length > 0; else noCompanies">
+      <li *ngFor="let comp of companies">
+        <strong>{{ comp.name }}</strong><br>
+        Emerald Account Balance: {{ comp.emeraldAccountBalance }}<br>
+        Address: {{ comp.address }}<br>
+        City: {{ comp.city }}<br>
+        Country: {{ comp.country }}<br>
+        Email: {{ comp.email }}<br>
+        Phone Number: {{ comp.phoneNumber }}<br>
+        <button (click)="deleteCompany(comp.id)">Delete</button>
+        <button (click)="fetchBalance(comp)">Show Balance</button>
+      </li>
+    </ul>
+    <ng-template #noCompanies>
+      <p>No companies to show</p>
+    </ng-template>
+  </div>
+</div>

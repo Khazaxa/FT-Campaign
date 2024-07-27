@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+}
+
+.left-panel, .right-panel {
+  flex: 1;
+  padding: 20px;
+}
+
+.left-panel {
+  border-right: 1px solid #ccc;
+}
