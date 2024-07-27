@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Import CommonModule
-import { FormsModule } from '@angular/forms';    // Import FormsModule
-import { AppService } from '../../../services/app.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Campaign } from './models/campaign';
+import { AppService } from '../../services/app.service';
+import { Cities } from './models/Cities';
 
 @Component({
   selector: 'app-campaigns',
   standalone: true,
-  imports: [CommonModule, FormsModule],  // Include the modules here
   templateUrl: './campaigns.component.html',
-  styleUrls: ['./campaigns.component.css']
+  styleUrls: ['./campaigns.component.css'],
+  imports: [CommonModule, FormsModule]
 })
 export class CampaignsComponent {
   campaign: Campaign = {
@@ -17,13 +18,16 @@ export class CampaignsComponent {
     name: '',
     keywords: '',
     bidAmount: 0,
-    campaignFound: false,
+    campaignFund: false,
     status: '',
     city: '',
     radius: 0
   };
 
+  campaigns: Campaign[] = [];
   showForm = false;
+  showCampaigns = false;
+  cities = Object.values(Cities);
 
   constructor(private appService: AppService) { }
 
@@ -33,9 +37,32 @@ export class CampaignsComponent {
         console.log('Campaign added successfully', newCampaign);
         this.showForm = false;
         this.resetForm();
+        this.loadCampaigns();
       },
       error: (error) => {
         console.error('Error adding campaign', error);
+      }
+    });
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  toggleCampaigns() {
+    this.showCampaigns = !this.showCampaigns;
+    if (this.showCampaigns) {
+      this.loadCampaigns();
+    }
+  }
+
+  loadCampaigns() {
+    this.appService.getCampaigns().subscribe({
+      next: (campaigns) => {
+        this.campaigns = campaigns;
+      },
+      error: (error) => {
+        console.error('Error fetching campaigns', error);
       }
     });
   }
@@ -46,7 +73,7 @@ export class CampaignsComponent {
       name: '',
       keywords: '',
       bidAmount: 0,
-      campaignFound: false,
+      campaignFund: false,
       status: '',
       city: '',
       radius: 0

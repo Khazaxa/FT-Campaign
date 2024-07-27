@@ -5,6 +5,7 @@ import ft.campaign.Models.CampaignRequest;
 import ft.campaign.Models.CampaignResponse;
 import ft.campaign.Services.CampaignService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class CampaignController {
         this.campaignService = campaignService;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/campaign")
     public CampaignResponse createCampaign(@RequestBody CampaignRequest request) throws WrongDataException {
         log.info("Create campaign request: {}", request);
@@ -64,6 +66,7 @@ public class CampaignController {
         return campaignResponse;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("campaigns")
     public List<CampaignResponse> getAll() throws WrongDataException{
         log.debug("Attempting to get all campaigns");

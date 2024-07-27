@@ -3,7 +3,7 @@ export interface Campaign {
     name: string;
     keywords: string;
     bidAmount: number;
-    campaignFound: boolean;
+    campaignFund: boolean;
     status: string;
     city: string;
     radius: number;

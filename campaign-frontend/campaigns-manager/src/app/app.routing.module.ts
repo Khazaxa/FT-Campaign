@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CampaignsComponent } from '../app/components/campaigns//campaigns/campaigns.component';
-import { CompaniesComponent } from './components/campaigns/companies/companies/companies.component';
+import { CampaignsComponent } from './components/campaigns/campaigns.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 const routes: Routes = [
   { path: 'campaigns', component: CampaignsComponent },
